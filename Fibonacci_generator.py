@@ -1,5 +1,6 @@
 import pygame
 import sys
+from tkinter import Tk, simpledialog
 
 def initialize_pygame():
     pygame.init()
@@ -13,14 +14,21 @@ def generate_fibonacci_sequence(n):
         sequence.append(sequence[-1] + sequence[-2])
     return sequence
 
-def main():
+def get_user_input():
+    root = Tk()
+    root.withdraw()  # Hide the root window
+    user_input = None
     try:
-        num_fib = int(input("Enter the number of Fibonacci numbers to display: "))
-        if num_fib <= 0:
-            raise ValueError("Number must be positive.")
+        user_input = simpledialog.askinteger("Input", "Enter the number of Fibonacci numbers to display:", minvalue=1)
+        if user_input is None:
+            raise ValueError("No input provided.")
     except ValueError as e:
         print(f"Invalid input: {e}")
         sys.exit()
+    return user_input
+
+def main():
+    num_fib = get_user_input()
 
     screen = initialize_pygame()
     font = pygame.font.Font(None, 36)
